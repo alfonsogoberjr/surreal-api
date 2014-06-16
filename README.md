@@ -30,7 +30,7 @@ Version
  	
 		npm install
  		
- - Add a user to the db, using the tools/adduser.js script
+ - Add a user to the db, using the tools/adduser.coffee script
 
 		coffee tools/adduser.coffee -e your@email.com
 
@@ -38,7 +38,7 @@ Version
  
  		nodemon server.coffee 	 	
 
- - go ahead and give it a try--login:
+ - login with cURL:
  
  		curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{ "email": "your@email.com", "password": "yourpassword" }'  http://localhost:5008/login
 
