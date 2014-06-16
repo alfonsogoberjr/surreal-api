@@ -1,0 +1,4 @@
+--require should
+--require coffee-script/register
+--compilers coffee:coffee-script/register
+--timeout 4000
