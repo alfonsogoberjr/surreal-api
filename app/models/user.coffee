@@ -16,6 +16,7 @@ userSchema = new Schema(
   hash: String
   name: String
   token: String
+  admin: Boolean
 )
 userSchema.pre "save", (next) ->
   self = this
@@ -28,8 +29,7 @@ userSchema.pre "save", (next) ->
       self.invalidate "email", "email must be unique"
       next new Error("email must be unique")
     else
-      
-      # logger.debug("didn't find user with email: " + self.email);
+      logger.debug("didn't find user with email: " + self.email);
       next()
     return
 
@@ -71,10 +71,6 @@ userSchema.statics.logoutUserWithToken = (token, done) ->
       return done(err)  if err
       done null
 
-    return
-
-  return
-
 userSchema.statics.addUser = (user, password, done) ->
   pass.hash password, (err, salt, hash) ->
     throw err  if err
@@ -84,9 +80,13 @@ userSchema.statics.addUser = (user, password, done) ->
       return done(err, null)  if err
       done null, doc
 
-    return
-
-  return
+userSchema.statics.listAllUsers = (admin, done) ->
+  if admin.admin
+    @find {}, (err, users) ->
+      userMap = {};
+      users.forEach (user) ->
+        userMap[user._id] = user;
+      done(null, userMap)
 
 User = mongoose.model("User", userSchema)
 module.exports = User

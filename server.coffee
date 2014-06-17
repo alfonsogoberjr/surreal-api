@@ -13,7 +13,6 @@ u           = require("util")
 moment      = require('moment')
 bodyParser  = require('body-parser')
 
-
 app         = express()
 
 logger.info "environment: " + env
@@ -45,7 +44,7 @@ app.set 'version', require('./package').version
 app.set 'description', require('./package').description
 
 logger.info "allowing origin: " + JSON.stringify(global.corsAllowOrigin)
-require("./config/routes") app, passport, express, logger
+require("./app/routes") app, passport, express, logger
 server = require("http").createServer(app)
 require("./config/socket") server, logger
 server.listen config.port, ->
