@@ -45,7 +45,9 @@
     "pwd": "0.0.3",
     "rbytes": "~1.0.0",
     "sockjs": "~0.3.8",
-    "winston": "~0.7.2"
+    "winston": "~0.7.2",
+    "restify": "^2.8.1",
+    "save": "0.0.20"
   },
   "devDependencies": {
     "supertest": "~0.7.1",

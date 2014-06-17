@@ -34,20 +34,14 @@ addUser = ->
       promptly.password "One more time: ", (err, passwordConfirm) ->
         throw err  if err
         throw "Passwords don't match"  if password isnt passwordConfirm
-        User.addUser u, password, (err, doc) ->
-          throw err  if err
-          delete doc.salt
+        promptly.prompt "Admin? (y/n):", (err, admin) ->
+          u.admin = true if admin is 'y'
+          throw "Please enter y or n:" if admin is not 'y' and not 'n'
+          User.addUser u, password, (err, doc) ->
+            throw err  if err
+            delete doc.salt
 
-          delete doc.hash
+            delete doc.hash
 
-          console.log "added user " + JSON.stringify(doc.email) + "."
-          process.exit 0
-          return
-
-        return
-
-      return
-
-    return
-
-  return
+            console.log "added user " + JSON.stringify(doc.email) + "."
+            process.exit 0
