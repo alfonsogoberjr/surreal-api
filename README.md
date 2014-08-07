@@ -1,7 +1,7 @@
 Surreal-API
 =========
 
-Surreal Estate REST API
+A node.js REST API
 
   - nodejs (duh) + expressjs
   - passportjs for auth (LocalStrategy, BearerStrategy represented)
