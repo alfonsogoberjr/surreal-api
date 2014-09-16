@@ -29,18 +29,22 @@ Version
  - From within the root (surreal-api/) directory
  	
 		npm install
- 		
- - Add a user to the db, using the tools/adduser.js script
-
-		coffee tools/adduser.coffee -e your@email.com
 
  - start the server
  
- 		nodemon server.coffee 	 	
+ 		nodemon server.coffee  
+ 		
+ - Create an account
+
+		curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{ "email": "your@email.com", "name": "Your Name", "admin": true, "password": "yourpassword", "passwordConfirm": "yourpassword" }'  http://localhost:5008/api/user/register
+
+	You'll get a response: 
+
+		"User Your Name (your@email.com) Created"
 
  - go ahead and give it a try--login:
  
- 		curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{ "email": "your@email.com", "password": "yourpassword" }'  http://localhost:5008/login
+ 		curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{ "email": "your@email.com", "password": "yourpassword" }'  http://localhost:5008/api/user/login
 
 	If successful, you'll get a response:
 
@@ -50,11 +54,9 @@ Version
 		  "name": "Your Name"
 		}
 
-	You'll receive a response that contains the token you'll use for subsequent requests that require authentication, i.e.
+	You'll receive a response that contains the token you'll use for subsequent requests that require authentication. The access_token parameter must be included in every request, like so: 
 	
-		curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:5008/loggedin?access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjY5M2M0MDQ5Mjk1Zjk3ZWY5ZDkxNzc0YzczMmQxNmU2Ig.JMmUbTOs59sa2XffxoFBaqbSwHgWfjSZ-dZJeOa3q-s
-		
-	will give you back a username & token, or `Unauthorized` otherwise.
+		curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:5008/api/user?access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjY5M2M0MDQ5Mjk1Zjk3ZWY5ZDkxNzc0YzczMmQxNmU2Ig.JMmUbTOs59sa2XffxoFBaqbSwHgWfjSZ-dZJeOa3q-s
 	
 ##TODO
 

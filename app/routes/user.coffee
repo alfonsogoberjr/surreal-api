@@ -24,8 +24,19 @@ module.exports = (app, passport, express, logger) ->
         logger.debug "req.Login error: " + JSON.stringify(err)
         res.send 401, err
 
+  app.post "/api/user/register", (req, res) ->
+    u = new User()
+    u.email = req.body.email
+    u.name = req.body.name
+    res.send 401, "Passwords don't match" if req.body.password isnt req.body.passwordConfirm
+    u.admin = true if req.body.admin
+    console.log req.body, u
+    User.addUser u, req.body.password, (err, doc) ->
+      res.send 401, err if err
+      delete doc.salt
+      delete doc.hash
+      res.send 201, "User " + doc.name + " (" + doc.email + ") Created"
 
-  
   #invalidate (remove) the session token from the user account, preventing further logins
   app.get "/api/user/logout", passport.authenticate("bearer",
     session: false
